@@ -1,6 +1,6 @@
 const API_URL = 'https://swapi.co/api/'
 const PEOPLE_URL = 'people/:id'
-/* Promises states: pending fulfilled and rejected */
+
 const obtenerPersonaje = (id) => {
   return new Promise((resolve, reject) => {
     const url = `${API_URL}${PEOPLE_URL.replace(':id', id)}`
@@ -13,5 +13,13 @@ const obtenerPersonaje = (id) => {
 const error = (id) => console.log(`Error al obtener personake ${id}`)
 
 obtenerPersonaje(1)
-  .then(personaje => console.log(`El personaje 1 es ${personaje.name}`))
+  .then(personaje1 => {
+    console.log(`El personaje 1 es ${personaje1.name}`)
+    return obtenerPersonaje(2)
+   })
+  .then(personaje2 => {
+    console.log(`El personaje 2 es ${personaje2.name}`)
+    return obtenerPersonaje(3)
+  })
+  .then(personaje3 => console.log(`El personaje 3 es ${personaje3.name}`))
   .catch(error)
