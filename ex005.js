@@ -1,6 +1,6 @@
 const API_URL = 'https://swapi.co/api/'
 const PEOPLE_URL = 'people/:id'
-
+/* Promises states: pending fulfilled and rejected */
 const obtenerPersonaje = (id) => {
   return new Promise((resolve, reject) => {
     const url = `${API_URL}${PEOPLE_URL.replace(':id', id)}`
