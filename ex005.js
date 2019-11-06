@@ -12,6 +12,14 @@ const obtenerPersonaje = (id) => {
 
 const error = (id) => console.log(`Error al obtener personake ${id}`)
 
+var ids = [1, 2, 3, 4, 5, 6, 7]
+var promesas = ids.map(id => obtenerPersonaje(id))
+
+Promise.all(promesas)
+       .then(personajes => console.log(personajes))
+       .catch(error)
+
+/*
 obtenerPersonaje(1)
   .then(personaje1 => {
     console.log(`El personaje 1 es ${personaje1.name}`)
@@ -23,3 +31,4 @@ obtenerPersonaje(1)
   })
   .then(personaje3 => console.log(`El personaje 3 es ${personaje3.name}`))
   .catch(error)
+  */
