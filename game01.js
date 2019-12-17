@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -107,6 +108,7 @@
         }
 
         inicializar() {
+          this.elegirColor = this.elegirColor.bind(this) // siempre va a quedar atado al this o juego mas no al elemento color
           btnEmpezar.classList.add('hide')
           this.nivel = 1
           this.colores = {
@@ -123,6 +125,7 @@
 
         siguienteNivel() {
           this.iluminarSecuencia()
+          this.agregarEventosClick()
         }
 
         transformarNumeroAColor(numero) {
@@ -152,6 +155,17 @@
 
         apagarColor(color) {
           this.colores[color].classList.remove('light')
+        }
+
+        agregarEventosClick() {
+          this.colores.celeste.addEventListener('click', this.elegirColor) // atar al this
+          this.colores.verde.addEventListener('click', this.elegirColor)
+          this.colores.violeta.addEventListener('click', this.elegirColor)
+          this.colores.naranja.addEventListener('click', this.elegirColor)
+        }
+
+        elegirColor(ev) {
+          console.log(this)
         }
       }
 
