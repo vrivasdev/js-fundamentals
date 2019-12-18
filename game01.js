@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -105,10 +104,11 @@
         constructor() {
           this.inicializar()
           this.generarSecuencia()
-          this.siguienteNivel()
+          setTimeout(this.siguienteNivel, 500)          
         }
 
         inicializar() {
+          this.siguienteNivel = this.siguienteNivel.bind(this) // no cambiara contexto. Siemre estara atado al Juego
           this.elegirColor = this.elegirColor.bind(this) // siempre va a quedar atado al this o juego mas no al elemento color
           btnEmpezar.classList.add('hide')
           this.nivel = 1
@@ -199,7 +199,8 @@
               if (this.nivel === (ULTIMO_NIVEL + 1)) {
                 // Gano
               } else {
-                setTimeout(this.siguienteNivel, 2000)
+                // cambiar this por Juego
+                setTimeout(this.siguienteNivel, 1500) // solo referencia a funcion
               }
             }
           } else {
