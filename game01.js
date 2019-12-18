@@ -82,6 +82,11 @@
       .hide {
         display: none;
       }
+
+      * {
+        font-family: 'Arial';
+      }
+
     </style>
   </head>
   <body>
@@ -92,6 +97,7 @@
       <div id="verde" class="color verde right" data-color="verde"></div>
       <button id="btnEmpezar" class="btn-start" onclick="empezarJuego()">Empezar a jugar!</button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
       const celeste = document.getElementById('celeste')
       const violeta = document.getElementById('violeta')
@@ -99,9 +105,10 @@
       const verde = document.getElementById('verde')
       const btnEmpezar = document.getElementById('btnEmpezar')
       const ULTIMO_NIVEL = 10
-
+      
       class Juego {
         constructor() {
+          this.inicializar = this.inicializar.bind(this)
           this.inicializar()
           this.generarSecuencia()
           setTimeout(this.siguienteNivel, 500)          
@@ -110,13 +117,21 @@
         inicializar() {
           this.siguienteNivel = this.siguienteNivel.bind(this) // no cambiara contexto. Siemre estara atado al Juego
           this.elegirColor = this.elegirColor.bind(this) // siempre va a quedar atado al this o juego mas no al elemento color
-          btnEmpezar.classList.add('hide')
+          this.toggleBtnEmpezar()          
           this.nivel = 1
           this.colores = {
             celeste,
             violeta,
             naranja,
             verde
+          }
+        }
+
+        toggleBtnEmpezar() {
+          if (btnEmpezar.classList.contains('hide')) {
+            btnEmpezar.classList.remove('hide')
+          } else {
+            btnEmpezar.classList.add('hide')
           }
         }
 
@@ -197,15 +212,28 @@
               this.nivel++
               this.eliminarEventosClick()
               if (this.nivel === (ULTIMO_NIVEL + 1)) {
-                // Gano
+                this.ganoElJuego()
               } else {
                 // cambiar this por Juego
                 setTimeout(this.siguienteNivel, 1500) // solo referencia a funcion
               }
             }
           } else {
-
+            this.perdioElJuego()
           }
+        }
+
+        ganoElJuego() {
+          swal('Platzi','Ganaste el juego!', 'success')
+          .then(this.inicializar)
+        }
+
+        perdioElJuego() {
+          swal('Platzi','Lamentamos, perdiste :(', 'error')
+          .then(() => {            
+            this.eliminarEventosClick()
+            this.inicializar()
+          })
         }
       }
 
